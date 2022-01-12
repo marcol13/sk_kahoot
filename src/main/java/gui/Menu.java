@@ -1,7 +1,11 @@
+package main.java.gui;
+
 import javax.swing.*;
 
 public class Menu {
-    private ImageIcon logo = new ImageIcon(getClass().getResource("/assets/Kahoot.png"));
+    //Create with maketext.io
+    private ImageIcon logo = new ImageIcon(getClass().getResource("/main/resources/images/Kahoot.png"));
+
     public Menu(GUI window){
         int width = AppSettings.width;
         int height = AppSettings.height;

@@ -1,3 +1,7 @@
+package main.java.gui;
+
+import main.java.gui.AppSettings;
+
 import javax.swing.*;
 import java.awt.*;
 
