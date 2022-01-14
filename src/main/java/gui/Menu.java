@@ -1,4 +1,4 @@
-package main.java.gui;
+package gui;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -6,13 +6,14 @@ import java.awt.event.ActionListener;
 
 public class Menu implements ActionListener {
     //Create with maketext.io
-    private ImageIcon logo = new ImageIcon(getClass().getResource("/main/resources/images/Kahoot.png"));
+    private ImageIcon logo = new ImageIcon(getClass().getResource("/main/resources/Kahoot.png"));
     Button createButton;
     Button joinButton;
     Button exitButton;
     GUI window;
 
     public Menu(GUI window){
+//        System.out.println(getClass().getResource("/assets/Kahoot.svg"));
         int width = AppSettings.width;
         int height = AppSettings.height;
         this.window = window;

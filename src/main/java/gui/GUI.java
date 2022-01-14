@@ -1,6 +1,4 @@
-package main.java.gui;
-
-import main.java.gui.AppSettings;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;

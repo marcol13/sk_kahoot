@@ -17,7 +17,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -31,7 +37,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>main.java.gui.main</mainClass>
+                            <mainClass>gui.main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -40,10 +46,10 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
-                    <outputDirectory>target/classes/main/resources/images</outputDirectory>
+                    <outputDirectory>${basedir}/target/classes/main/resources</outputDirectory>
                     <resources>
                         <resource>
-                            <directory>main/resources/images</directory>
+                            <directory>src/main/resources/</directory>
                             <includes>
                                 <include>*.png</include>
                             </includes>

@@ -1,7 +1,4 @@
-package main.java.gui;
-
-import main.java.gui.GUI;
-import main.java.gui.Menu;
+package gui;
 
 public class main {
     public static void main(String[] args){
