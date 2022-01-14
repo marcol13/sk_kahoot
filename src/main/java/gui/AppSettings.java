@@ -7,4 +7,5 @@ public class AppSettings {
     public static final int height = 800;
     public static final String title = "Kahoot";
     public static JSONObject jo = new JSONObject();
+    public static Game gameJSON;
 }

@@ -10,6 +10,13 @@ public class Text extends JLabel {
         this.setBounds(x, y, width, height);
         this.setHorizontalAlignment(SwingConstants.CENTER);
         this.setVerticalAlignment(SwingConstants.CENTER);
-//        this.setBorder(BorderFactory.createLineBorder(Color.black));
+    }
+
+    public Text(String text, int x, int y, int width, int height, Color color) {
+        this.setText(text);
+        this.setBounds(x, y, width, height);
+        this.setHorizontalAlignment(SwingConstants.CENTER);
+        this.setVerticalAlignment(SwingConstants.CENTER);
+        this.setBorder(BorderFactory.createLineBorder(color));
     }
 }

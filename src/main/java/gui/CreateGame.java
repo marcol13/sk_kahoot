@@ -1,5 +1,6 @@
 package gui;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,6 +13,7 @@ public class CreateGame implements ActionListener {
     Text questionsQuantityLabel;
     InputNumeric timeNumeric;
     Text timeLabel;
+    Text errorMessage;
 
     public CreateGame(GUI window){
         int width = AppSettings.width;
@@ -20,6 +22,8 @@ public class CreateGame implements ActionListener {
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
+
+        //TODO Dodać przycisk back
 
         gameNameInput = new InputText(Math.round(width / 4), Math.round(height / 7), Math.round(width / 2), 50);
         gameNameLabel = new Text("Nazwa gry", 0, Math.round(height / 12), width, Math.round(height / 18));
@@ -32,6 +36,10 @@ public class CreateGame implements ActionListener {
         timeLabel = new Text("Czas na pytanie", 0, Math.round(height/12) + 300, width, Math.round(height/18));
 
         nextStepButton = new Button("Dalej", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+        nextStepButton.addActionListener(this);
+
+        errorMessage = new Text("Podałeś błędne dane", 0, Math.round(height / 3) + 320 + Math.round(height / 12), AppSettings.width, Math.round(height/18));
+        errorMessage.setVisible(false);
 
         window.frame.add(gameNameInput);
         window.frame.add(gameNameLabel);
@@ -40,12 +48,25 @@ public class CreateGame implements ActionListener {
         window.frame.add(timeNumeric);
         window.frame.add(timeLabel);
         window.frame.add(nextStepButton);
+        window.frame.add(errorMessage);
 
         window.reload();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == nextStepButton){
+            String name = gameNameInput.getText();
+            int quantity = (int) questionsQuantityNumeric.getValue();
+            int time = (int) timeNumeric.getValue();
+            if(!name.isEmpty() && quantity >= 1 && quantity <= 10 && time >= 10 && time <= 99){
+                AppSettings.gameJSON = new Game(name, quantity, time);
+                System.out.println(name);
+            }
+            else{
+                errorMessage.setVisible(true);
+            }
 
+        }
     }
 }

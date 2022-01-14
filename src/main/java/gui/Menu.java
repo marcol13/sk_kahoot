@@ -3,17 +3,17 @@ package gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class Menu implements ActionListener {
     //Create with maketext.io
-    private ImageIcon logo = new ImageIcon(getClass().getResource("/main/resources/Kahoot.png"));
+    private ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/resources/Kahoot.png")));
     Button createButton;
     Button joinButton;
     Button exitButton;
     GUI window;
 
     public Menu(GUI window){
-//        System.out.println(getClass().getResource("/assets/Kahoot.svg"));
         int width = AppSettings.width;
         int height = AppSettings.height;
         this.window = window;
@@ -45,11 +45,10 @@ public class Menu implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == createButton){
-            System.out.println("Create");
             new CreateGame(window);
         }
         else if(e.getSource() == joinButton){
-            System.out.println("Join");
+            new JoinRoom(window);
         }
         else if(e.getSource() == exitButton){
             System.exit(0);
