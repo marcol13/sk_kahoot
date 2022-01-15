@@ -8,4 +8,5 @@ public class AppSettings {
     public static final String title = "Kahoot";
     public static JSONObject jo = new JSONObject();
     public static Game gameJSON;
+    public static int answerCreationQuantity;
 }

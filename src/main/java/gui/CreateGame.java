@@ -61,7 +61,8 @@ public class CreateGame implements ActionListener {
             int time = (int) timeNumeric.getValue();
             if(!name.isEmpty() && quantity >= 1 && quantity <= 10 && time >= 10 && time <= 99){
                 AppSettings.gameJSON = new Game(name, quantity, time);
-                System.out.println(name);
+                AppSettings.answerCreationQuantity = quantity;
+                new AddQuestion(window, quantity);
             }
             else{
                 errorMessage.setVisible(true);
