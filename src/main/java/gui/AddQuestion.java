@@ -86,7 +86,7 @@ public class AddQuestion implements ActionListener {
             }
         }
         else if(e.getSource() == buttonLobby){
-            System.out.println("siema");
+            new Lobby(window, true);
         }
     }
 }

@@ -12,8 +12,10 @@ public class Lobby implements ActionListener {
     Text usersListTitleText;
     List<String> userNames;
     Boolean isAdmin;
+    Text gameId;
     Text questionTime;
     Text questionQuantity;
+    Button startGame;
 
     public Lobby(GUI window, Boolean isAdmin){
         int width = AppSettings.width;
@@ -37,9 +39,11 @@ public class Lobby implements ActionListener {
 
         usersListTitleText = new Text("Użytkownicy:", 0, Math.round(height / 6), Math.round(width / 2), Math.round(height / 18));
 
-        questionQuantity = new Text("Ilość pytań:\t"+"8", Math.round(width / 2) + 20, Math.round(height / 6) + 10, Math.round(width / 2) - 40, 50, Color.BLACK);
+        gameId = new Text("Id gry: 1234", Math.round(width / 2) + 20, Math.round(height / 6) + 10, Math.round(width / 2) - 40, 50, Color.BLACK);
 
-        questionTime = new Text("Czas na pytanie:\t"+"60", Math.round(width / 2) + 20, Math.round(height / 6) + 70, Math.round(width / 2) - 40, 50, Color.BLACK);
+        questionQuantity = new Text("Ilość pytań: 8", Math.round(width / 2) + 20, Math.round(height / 6) + 70, Math.round(width / 2) - 40, 50, Color.BLACK);
+
+        questionTime = new Text("Czas na pytanie: 60", Math.round(width / 2) + 20, Math.round(height / 6) + 130, Math.round(width / 2) - 40, 50, Color.BLACK);
 
         if(userNames.size() != 0){
             for(int i = 0; i < userNames.size(); i++){
@@ -48,8 +52,14 @@ public class Lobby implements ActionListener {
             }
         }
 
+        if(isAdmin){
+            startGame = new Button("Rozpocznij grę", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+            window.frame.add(startGame);
+        }
+
         window.frame.add(gameNameText);
         window.frame.add(usersListTitleText);
+        window.frame.add(gameId);
         window.frame.add(questionQuantity);
         window.frame.add(questionTime);
 
