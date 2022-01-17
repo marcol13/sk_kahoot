@@ -1,7 +1,11 @@
 package gui;
 
+import org.json.JSONException;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddQuestion implements ActionListener {
     GUI window;
@@ -61,6 +65,17 @@ public class AddQuestion implements ActionListener {
         window.reload();
     }
 
+    public Question addQuestion(String questionContent, String [] answersContent){
+        List<Answer> answers;
+        answers = new ArrayList<Answer>();
+        Question result;
+        for(int i = 0; i < 4; i++){
+            answers.add(new Answer(answersContent[i], answerCheckbox[i].isSelected()));
+        }
+        result = new Question(questionContent, answers);
+        return result;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == buttonNext){
@@ -79,6 +94,7 @@ public class AddQuestion implements ActionListener {
                 }
             }
             if(!questionContent.isEmpty() && flagAnswer && flagCheckbox){
+                AppSettings.questionList.add(addQuestion(questionContent, answerContent));
                 new AddQuestion(window, toMake - 1);
             }
             else{
@@ -86,7 +102,27 @@ public class AddQuestion implements ActionListener {
             }
         }
         else if(e.getSource() == buttonLobby){
-            new Lobby(window, true);
+            String questionContent = questionContentInput.getText();
+            String [] answerContent = new String [4];
+            Boolean flagAnswer = true;
+            Boolean flagCheckbox = false;
+            for(int i = 0; i < 4; i++){
+                answerContent[i] = answerInput[i].getText();
+                if(answerContent[i].isEmpty()){
+                    flagAnswer = false;
+                    break;
+                }
+                if(!flagCheckbox && answerCheckbox[i].isSelected() == true){
+                    flagCheckbox = true;
+                }
+            }
+            if(!questionContent.isEmpty() && flagAnswer && flagCheckbox){
+                AppSettings.questionList.add(addQuestion(questionContent, answerContent));
+                new Lobby(window, true);
+            }
+            else{
+                errorMessage.setVisible(true);
+            }
         }
     }
 }

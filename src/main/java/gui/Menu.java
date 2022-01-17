@@ -32,7 +32,6 @@ public class Menu implements ActionListener {
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setBounds(Math.round((width - logo.getIconWidth()) / 2), 100, logo.getIconWidth(), logo.getIconHeight());
         logoLabel.setVisible(true);
-        System.out.println(logoLabel);
 
         window.frame.add(logoLabel);
         window.frame.add(createButton);

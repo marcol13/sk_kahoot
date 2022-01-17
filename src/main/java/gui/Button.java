@@ -65,5 +65,9 @@ public class Button extends JButton {
         this.setBounds(x, y, width, height);
         this.setFocusable(false);
     }
+
+    public void changeToGrey(){
+        this.setBackground(Color.GRAY);
+    }
 }
 

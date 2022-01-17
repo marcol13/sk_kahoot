@@ -3,6 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
 public class CreateGame implements ActionListener {
     GUI window;
@@ -22,6 +23,8 @@ public class CreateGame implements ActionListener {
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
+
+        AppSettings.questionList = new ArrayList<Question>();
 
         //TODO Dodać przycisk back
 

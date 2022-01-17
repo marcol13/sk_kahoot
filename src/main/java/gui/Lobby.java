@@ -1,5 +1,7 @@
 package gui;
 
+import org.json.JSONException;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,15 +37,15 @@ public class Lobby implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-        gameNameText = new Text("Nazwa gry", 0, Math.round(height / 15), width, Math.round(height / 18));
+        gameNameText = new Text(AppSettings.gameJSON.gameName, 0, Math.round(height / 15), width, Math.round(height / 18));
 
         usersListTitleText = new Text("Użytkownicy:", 0, Math.round(height / 6), Math.round(width / 2), Math.round(height / 18));
 
         gameId = new Text("Id gry: 1234", Math.round(width / 2) + 20, Math.round(height / 6) + 10, Math.round(width / 2) - 40, 50, Color.BLACK);
 
-        questionQuantity = new Text("Ilość pytań: 8", Math.round(width / 2) + 20, Math.round(height / 6) + 70, Math.round(width / 2) - 40, 50, Color.BLACK);
+        questionQuantity = new Text("Ilość pytań: " + AppSettings.gameJSON.questionQuantity, Math.round(width / 2) + 20, Math.round(height / 6) + 70, Math.round(width / 2) - 40, 50, Color.BLACK);
 
-        questionTime = new Text("Czas na pytanie: 60", Math.round(width / 2) + 20, Math.round(height / 6) + 130, Math.round(width / 2) - 40, 50, Color.BLACK);
+        questionTime = new Text("Czas na pytanie: " + AppSettings.gameJSON.questionTime, Math.round(width / 2) + 20, Math.round(height / 6) + 130, Math.round(width / 2) - 40, 50, Color.BLACK);
 
         if(userNames.size() != 0){
             for(int i = 0; i < userNames.size(); i++){
@@ -54,8 +56,10 @@ public class Lobby implements ActionListener {
 
         if(isAdmin){
             startGame = new Button("Rozpocznij grę", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+            startGame.addActionListener(this);
             window.frame.add(startGame);
         }
+
 
         window.frame.add(gameNameText);
         window.frame.add(usersListTitleText);
@@ -63,11 +67,20 @@ public class Lobby implements ActionListener {
         window.frame.add(questionQuantity);
         window.frame.add(questionTime);
 
+        try {
+            AppSettings.teacherJSON = AppSettings.gameJSON.addJSON(AppSettings.questionList);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         window.reload();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == startGame){
+            new QuizTeacher(window, AppSettings.gameJSON.questionQuantity);
+        }
     }
 }
