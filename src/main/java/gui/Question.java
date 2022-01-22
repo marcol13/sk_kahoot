@@ -1,7 +1,6 @@
 package gui;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public class Question {
         this.answers = answers;
     }
 
-    public JSONObject addToJSON() throws JSONException {
+    public JSONObject addToJSON() throws Exception {
         JSONObject joQuestion = new JSONObject();
         JSONArray jaAnswers = new JSONArray();
         joQuestion.put("question", this.content);

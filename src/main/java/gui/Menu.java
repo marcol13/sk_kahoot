@@ -3,6 +3,7 @@ package gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Objects;
 
 public class Menu implements ActionListener {
@@ -50,7 +51,12 @@ public class Menu implements ActionListener {
             new JoinRoom(window);
         }
         else if(e.getSource() == exitButton){
-            System.exit(0);
+//            System.exit(0);
+            try {
+                AppSettings.cl.sendData("mam tego dosyć v2");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

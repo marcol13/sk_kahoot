@@ -1,7 +1,6 @@
 package gui;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public class Game {
         this.questions = questions;
     }
 
-    public JSONObject addJSON(List<Question> questions) throws JSONException {
+    public JSONObject addJSON(List<Question> questions) throws Exception {
         JSONObject joGame = new JSONObject();
         JSONArray jaGame = new JSONArray();
         setQuestions(questions);

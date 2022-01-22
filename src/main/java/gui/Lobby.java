@@ -1,7 +1,5 @@
 package gui;
 
-import org.json.JSONException;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -70,7 +68,7 @@ public class Lobby implements ActionListener {
         try {
             AppSettings.teacherJSON = AppSettings.gameJSON.addJSON(AppSettings.questionList);
         }
-        catch (JSONException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
 

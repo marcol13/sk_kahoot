@@ -1,6 +1,5 @@
 package gui;
 
-import org.json.JSONException;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

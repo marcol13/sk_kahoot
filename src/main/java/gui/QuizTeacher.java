@@ -1,6 +1,5 @@
 package gui;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.awt.*;
@@ -38,7 +37,7 @@ public class QuizTeacher implements ActionListener {
                 answersName[i] = String.valueOf(questionJSON.getJSONArray("answers").getJSONObject(i).get("question"));
                 correctAnswers[i] = (Boolean) questionJSON.getJSONArray("answers").getJSONObject(i).get("isCorrect");
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

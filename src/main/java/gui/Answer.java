@@ -1,6 +1,5 @@
 package gui;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Answer {
@@ -12,7 +11,7 @@ public class Answer {
         this.isCorrect = isCorrect;
     }
 
-    public JSONObject addToJSON() throws JSONException {
+    public JSONObject addToJSON() throws Exception {
         JSONObject joAnswer = new JSONObject();
         joAnswer.put("question", this.content);
         joAnswer.put("isCorrect", this.isCorrect);

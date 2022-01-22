@@ -12,4 +12,5 @@ public class AppSettings {
     public static Game gameJSON;
     public static int answerCreationQuantity;
     public static List<Question> questionList;
+    public static ClientConnection cl;
 }

@@ -3,6 +3,9 @@ package gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.*;
 
 public class CreateGame implements ActionListener {
@@ -65,9 +68,17 @@ public class CreateGame implements ActionListener {
             if(!name.isEmpty() && quantity >= 1 && quantity <= 10 && time >= 10 && time <= 99){
                 AppSettings.gameJSON = new Game(name, quantity, time);
                 AppSettings.answerCreationQuantity = quantity;
-                new AddQuestion(window, quantity);
+                try {
+                    AppSettings.cl = new ClientConnection("0.0.0.0", 5050);
+                    new AddQuestion(window, quantity);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    errorMessage.setText("Błąd połączenia");
+                    errorMessage.setVisible(true);
+                }
             }
             else{
+                errorMessage.setText("Błędne dane");
                 errorMessage.setVisible(true);
             }
 
