@@ -13,4 +13,5 @@ public class AppSettings {
     public static int answerCreationQuantity;
     public static List<Question> questionList;
     public static ClientConnection cl;
+    public static String gameId;
 }

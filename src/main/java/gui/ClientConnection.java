@@ -11,6 +11,7 @@ public class ClientConnection{
     Socket socket = null;
     DataInputStream input = null;
     DataOutputStream output = null;
+    InputStream is;
 //    BufferedReader receiver;
 //    PrintWriter sender;
     String address;
@@ -44,7 +45,24 @@ public class ClientConnection{
 //        output.writeUTF(data);
 //        output.flush();
 //        sender.println(data);
+        System.out.println(data);
         socket.getOutputStream().write(data.getBytes());
+    }
+
+    public String getData() throws IOException {
+//        InputStreamReader streamReader= new InputStreamReader(this.socket.getInputStream());
+//        BufferedReader reader= new BufferedReader(streamReader);
+//
+//        String value= reader.readLine();
+//        reader.close();
+//        System.out.println("Odebrano: " + value);
+        this.is = socket.getInputStream();
+        byte[] bytearr = new byte[512];
+        int len = is.read(bytearr);
+        if(len == -1){
+            System.out.println("Błąd przesyłu danych");
+        }
+        return new String(bytearr);
     }
 
     public void closeConnection() throws IOException {

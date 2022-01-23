@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.ConnectException;
-import java.net.UnknownHostException;
 import java.util.*;
 
 public class CreateGame implements ActionListener {
@@ -70,6 +68,10 @@ public class CreateGame implements ActionListener {
                 AppSettings.answerCreationQuantity = quantity;
                 try {
                     AppSettings.cl = new ClientConnection("0.0.0.0", 5050);
+                    AppSettings.cl.sendData("\\create_game\\"+name+"\\quantity\\"+quantity+"\\time\\"+time);
+                    AppSettings.gameId = AppSettings.cl.getData();
+//                    AppSettings.cl.sendData("\\id-"+AppSettings.gameId+"\\quantity\\"+quantity);
+//                    AppSettings.cl.sendData("\\id-"+AppSettings.gameId+"\\time\\"+time);
                     new AddQuestion(window, quantity);
                 } catch (IOException ex) {
                     ex.printStackTrace();

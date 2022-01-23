@@ -39,7 +39,7 @@ public class Lobby implements ActionListener {
 
         usersListTitleText = new Text("Użytkownicy:", 0, Math.round(height / 6), Math.round(width / 2), Math.round(height / 18));
 
-        gameId = new Text("Id gry: 1234", Math.round(width / 2) + 20, Math.round(height / 6) + 10, Math.round(width / 2) - 40, 50, Color.BLACK);
+        gameId = new Text("Id gry: "+AppSettings.gameId, Math.round(width / 2) + 20, Math.round(height / 6) + 10, Math.round(width / 2) - 40, 50, Color.BLACK);
 
         questionQuantity = new Text("Ilość pytań: " + AppSettings.gameJSON.questionQuantity, Math.round(width / 2) + 20, Math.round(height / 6) + 70, Math.round(width / 2) - 40, 50, Color.BLACK);
 
