@@ -3,6 +3,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,6 +95,11 @@ public class AddQuestion implements ActionListener {
             }
             if(!questionContent.isEmpty() && flagAnswer && flagCheckbox){
                 AppSettings.questionList.add(addQuestion(questionContent, answerContent));
+                try {
+                    sendAnswers();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 new AddQuestion(window, toMake - 1);
             }
             else{
@@ -117,11 +123,27 @@ public class AddQuestion implements ActionListener {
             }
             if(!questionContent.isEmpty() && flagAnswer && flagCheckbox){
                 AppSettings.questionList.add(addQuestion(questionContent, answerContent));
+                try {
+                    sendAnswers();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 new Lobby(window, true);
             }
             else{
                 errorMessage.setVisible(true);
             }
         }
+    }
+
+    public void sendAnswers() throws IOException {
+        String answers = "";
+        for(int i = 0; i < 4; i++){
+            if(answerCheckbox[i].isSelected())
+                answers += "\\1";
+            else
+                answers += "\\0";
+        }
+        AppSettings.cl.sendData("\\send_answers\\id\\"+(AppSettings.gameId+("\\answers"+answers)));
     }
 }

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class JoinRoom implements ActionListener {
     GUI window;
@@ -48,8 +49,38 @@ public class JoinRoom implements ActionListener {
         if(e.getSource() == nextButton){
             String userName = userNameInput.getText();
             String gameID = roomIDInput.getText();
-            if(!userName.isEmpty() && gameID.equals("1234")){
-                new Lobby(window, false);
+            if(!userName.isEmpty() && !gameID.isEmpty()){
+                try {
+                    AppSettings.cl = new ClientConnection("0.0.0.0", 5050);
+                    AppSettings.cl.sendData("\\join_game\\id\\"+(gameID+("\\user\\"+userName)));
+                    String answer = AppSettings.cl.getData();
+                    System.out.println(answer);
+                    System.out.println(answer.equals("\\error\\id"));
+                    if(answer.indexOf("\\error\\id") == 0){
+                        errorMessage.setText("Nie istnieje gra o takim ID");
+                        errorMessage.setVisible(true);
+                    }
+                    else if(answer.indexOf("\\error\\user") == 0){
+                        errorMessage.setText("Istnieje już taki użytkownik");
+                        errorMessage.setVisible(true);
+                    }
+                    else if(answer.indexOf("\\ok\\") == 0){
+                        int iQuantity = answer.indexOf("\\quantity\\");
+                        int iTime = answer.indexOf("\\time\\");
+                        String gameName = answer.substring(14, iQuantity);
+                        int gameQuantity = Integer.parseInt(answer.substring(iQuantity + 10, iTime));
+                        int time = Integer.parseInt(answer.substring(iTime + 6));
+                        AppSettings.gameId = gameID;
+                        AppSettings.gameJSON = new Game(gameName, gameQuantity, time);
+                        new Lobby(window, false);
+                    }
+                    else{
+                        errorMessage.setText("Błąd połączenia");
+                        errorMessage.setVisible(true);
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             else{
                 errorMessage.setVisible(true);

@@ -52,24 +52,23 @@ public class Lobby implements ActionListener {
             }
         }
 
-        if(isAdmin){
-            startGame = new Button("Rozpocznij grę", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
-            startGame.addActionListener(this);
-            window.frame.add(startGame);
-        }
-
-
         window.frame.add(gameNameText);
         window.frame.add(usersListTitleText);
         window.frame.add(gameId);
         window.frame.add(questionQuantity);
         window.frame.add(questionTime);
 
-        try {
-            AppSettings.teacherJSON = AppSettings.gameJSON.addJSON(AppSettings.questionList);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
+        if(isAdmin){
+            startGame = new Button("Rozpocznij grę", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+            startGame.addActionListener(this);
+            window.frame.add(startGame);
+
+            try {
+                AppSettings.teacherJSON = AppSettings.gameJSON.addJSON(AppSettings.questionList);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         window.reload();

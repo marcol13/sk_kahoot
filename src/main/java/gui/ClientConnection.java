@@ -56,13 +56,15 @@ public class ClientConnection{
 //        String value= reader.readLine();
 //        reader.close();
 //        System.out.println("Odebrano: " + value);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
         this.is = socket.getInputStream();
         byte[] bytearr = new byte[512];
-        int len = is.read(bytearr);
-        if(len == -1){
-            System.out.println("Błąd przesyłu danych");
-        }
-        return new String(bytearr);
+        baos.write(bytearr, 0, is.read(bytearr));
+//        int len = is.read(bytearr);
+//        if(len == -1){
+//            System.out.println("Błąd przesyłu danych");
+//        }
+        return String.valueOf(baos);
     }
 
     public void closeConnection() throws IOException {
