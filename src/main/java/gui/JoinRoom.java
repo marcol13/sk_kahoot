@@ -72,6 +72,7 @@ public class JoinRoom implements ActionListener {
                         int time = Integer.parseInt(answer.substring(iTime + 6));
                         AppSettings.gameId = gameID;
                         AppSettings.gameJSON = new Game(gameName, gameQuantity, time);
+                        AppSettings.myName = userName;
                         new Lobby(window, false);
                     }
                     else{

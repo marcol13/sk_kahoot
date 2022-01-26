@@ -1,10 +1,13 @@
 package gui;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+import java.util.List;
 
 public class ClientConnection{
 
@@ -17,14 +20,19 @@ public class ClientConnection{
     String address;
     int port;
     Boolean errorFlag;
+    int messageSize;
+    String nowReaded;
+//    List<String> messageList;
 
     public ClientConnection(String address, int port) throws IOException {
         this.address = address;
         this.port = port;
         this.errorFlag = false;
+        this.messageSize = -1;
         try {
             socket = new Socket(address, port);
 
+            this.nowReaded = "";
 
 //            input = new DataInputStream(System.in);
 //
@@ -45,7 +53,12 @@ public class ClientConnection{
 //        output.writeUTF(data);
 //        output.flush();
 //        sender.println(data);
-        System.out.println(data);
+//        System.out.println(data);
+        socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(data.length()).array());
+        System.out.println(data.length());
+        for(byte b: ByteBuffer.allocate(4).putInt(data.length()).array()){
+            System.out.format("0x%x ", b);
+        }
         socket.getOutputStream().write(data.getBytes());
     }
 
@@ -56,15 +69,38 @@ public class ClientConnection{
 //        String value= reader.readLine();
 //        reader.close();
 //        System.out.println("Odebrano: " + value);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        this.is = socket.getInputStream();
-        byte[] bytearr = new byte[512];
-        baos.write(bytearr, 0, is.read(bytearr));
+        String result;
+
+        while(true){
+            if(messageSize < 0){
+                if(nowReaded.length() > 4){
+                    messageSize = new BigInteger(nowReaded.substring(0,4).getBytes()).intValue();
+                    nowReaded = nowReaded.substring(4);
+                    System.out.println(messageSize);
+                }
+            }
+            if(messageSize > 0 && messageSize <= nowReaded.length()){
+                result = nowReaded.substring(0,messageSize);
+                nowReaded = nowReaded.substring(messageSize);
+                messageSize = -1;
+                break;
+            }
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            this.is = socket.getInputStream();
+            byte[] bytearr = new byte[512];
+            int len = is.read(bytearr);
+            baos.write(bytearr, 0, len);
+            this.nowReaded += String.valueOf(baos);
+            if(len < 1)
+                throw new IOException();
+        }
+        return result;
 //        int len = is.read(bytearr);
 //        if(len == -1){
 //            System.out.println("Błąd przesyłu danych");
 //        }
-        return String.valueOf(baos);
+//        return String.valueOf(baos);
     }
 
     public void closeConnection() throws IOException {
