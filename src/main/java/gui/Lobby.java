@@ -1,12 +1,15 @@
 package gui;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-public class Lobby implements ActionListener {
+public class Lobby extends Thread implements ActionListener {
     GUI window;
     Text gameNameText;
     Text usersListTitleText;
@@ -16,6 +19,9 @@ public class Lobby implements ActionListener {
     Text questionTime;
     Text questionQuantity;
     Button startGame;
+    JPanel userPanel;
+
+    String command;
 
     public Lobby(GUI window, Boolean isAdmin){
         int width = AppSettings.width;
@@ -23,17 +29,33 @@ public class Lobby implements ActionListener {
         this.window = window;
         this.isAdmin = isAdmin;
 
-        userNames = new ArrayList<>();
-        ////
-        userNames.add("Michał");
-        userNames.add("Marcin");
-        userNames.add("Maciej");
-        userNames.add("PawełToGej2137");
+        if(isAdmin || AppSettings.userNames == null)
+            AppSettings.userNames = new ArrayList<>();
 
-        ////
+        if(!isAdmin)
+            System.out.println("is empty lobby: " +(AppSettings.myName + (" v1: "+ AppSettings.userNames.size())));
+//        System.out.println(AppSettings.myName + (" v1: "+ AppSettings.userNames));
+
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
+
+
+
+        ////
+//        userNames.add("Michał");
+//        userNames.add("Marcin");
+//        userNames.add("Maciej");
+//        userNames.add("PawełToGej2137");
+        ////
+
+
+
+
+
+//        showNames();
+
+//        userPanel = new JPanel()
 
         gameNameText = new Text(AppSettings.gameJSON.gameName, 0, Math.round(height / 15), width, Math.round(height / 18));
 
@@ -45,12 +67,7 @@ public class Lobby implements ActionListener {
 
         questionTime = new Text("Czas na pytanie: " + AppSettings.gameJSON.questionTime, Math.round(width / 2) + 20, Math.round(height / 6) + 130, Math.round(width / 2) - 40, 50, Color.BLACK);
 
-        if(userNames.size() != 0){
-            for(int i = 0; i < userNames.size(); i++){
-                Text temp = new Text(userNames.get(i), 20, Math.round(height / 4) + i * 30, Math.round(width / 2) - 40,  Math.round(height / 18));
-                window.frame.add(temp);
-            }
-        }
+
 
         window.frame.add(gameNameText);
         window.frame.add(usersListTitleText);
@@ -72,7 +89,76 @@ public class Lobby implements ActionListener {
         }
 
         window.reload();
+
+        Thread t1 = new readThread();
+
+        t1.start();
     }
+
+    public class readThread extends Thread{
+
+
+        @Override
+        public void run(){
+            String command = "";
+
+            while(true){
+                try {
+                    command = AppSettings.cl.getData();
+                    System.out.println("komenda lobby: " + command);
+//                    if(command.indexOf("\\users\\") == 0){
+//                        int pos;
+//                        if(command.length() == 7){
+//                            continue;
+//                        }
+//                        command = command.substring(6);
+//                        while(command.contains("\\")){
+//                            pos = command.indexOf("\\");
+//                            userNames.add(command.substring(0,pos));
+//                            System.out.println("pos + 1: " + command.substring(0,pos));
+//                            command = command.substring(pos + 1);
+//                        }
+//                        userNames.add(command);
+//                        showNames();
+//                        System.out.println(command);
+//                    }
+                    if(command.indexOf("\\add_user\\") == 0){
+                        String user = command.substring(10);
+                        if(user.equals("")){
+                            System.out.println("o ja pierdole");
+                        }
+                        System.out.println(AppSettings.myName + (" v1: "+ AppSettings.userNames));
+                        AppSettings.userNames.add(user);
+                        System.out.println(AppSettings.myName + (" v2: "+ AppSettings.userNames));
+                        System.out.println("add user: " + user);
+
+                        showNames();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public void showNames(){
+        System.out.println("show names!");
+        if(AppSettings.userNames.size() != 0){
+            int i = 0;
+            for(String user : AppSettings.userNames){
+                Text temp = new Text(user, 20, Math.round(AppSettings.height / 4) + i * 30, Math.round(AppSettings.width / 2) - 40,  Math.round(AppSettings.height / 18));
+                window.frame.add(temp);
+                i++;
+            }
+//            for(int i = 0; i < userNames.size(); i++){
+//                Text temp = new Text(userNames.get(i), 20, Math.round(AppSettings.height / 4) + i * 30, Math.round(AppSettings.width / 2) - 40,  Math.round(AppSettings.height / 18));
+//                window.frame.add(temp);
+//            }
+            System.out.println(AppSettings.myName + (": "+ AppSettings.userNames));
+            window.reload();
+        }
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {

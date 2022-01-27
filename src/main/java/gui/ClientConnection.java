@@ -55,10 +55,9 @@ public class ClientConnection{
 //        sender.println(data);
 //        System.out.println(data);
         socket.getOutputStream().write(ByteBuffer.allocate(4).putInt(data.length()).array());
-        System.out.println(data.length());
-        for(byte b: ByteBuffer.allocate(4).putInt(data.length()).array()){
-            System.out.format("0x%x ", b);
-        }
+//        for(byte b: ByteBuffer.allocate(4).putInt(data.length()).array()){
+//            System.out.format("0x%x ", b);
+//        }
         socket.getOutputStream().write(data.getBytes());
     }
 
@@ -76,7 +75,6 @@ public class ClientConnection{
                 if(nowReaded.length() > 4){
                     messageSize = new BigInteger(nowReaded.substring(0,4).getBytes()).intValue();
                     nowReaded = nowReaded.substring(4);
-                    System.out.println(messageSize);
                 }
             }
             if(messageSize > 0 && messageSize <= nowReaded.length()){
