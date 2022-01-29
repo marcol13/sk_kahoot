@@ -29,6 +29,20 @@ public class Lobby extends Thread implements ActionListener {
         this.window = window;
         this.isAdmin = isAdmin;
 
+        AppSettings.userPanel = new Panel(0, Math.round(AppSettings.height / 4), Math.round(AppSettings.width / 2), Math.round(AppSettings.height / 2) - 50);
+
+//        if(AppSettings.userNames.size() != 0){
+//            int i = 0;
+//            for(String user : AppSettings.userNames){
+//                Text temp = new Text(user, 20, Math.round(AppSettings.height / 4) + i * 30, Math.round(AppSettings.width / 2) - 40,  Math.round(AppSettings.height / 18));
+//                window.frame.add(temp);
+//                i++;
+//            }
+//            window.reload();
+//        }
+
+//        AppSettings.userPanel.setBounds();
+
         if(isAdmin || AppSettings.userNames == null)
             AppSettings.userNames = new ArrayList<>();
 
@@ -40,7 +54,7 @@ public class Lobby extends Thread implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-
+        window.frame.add(AppSettings.userPanel);
 
         ////
 //        userNames.add("Michał");
@@ -90,74 +104,58 @@ public class Lobby extends Thread implements ActionListener {
 
         window.reload();
 
-        Thread t1 = new readThread();
+        AppSettings.t1 = new ReadThread(window);
 
-        t1.start();
+        AppSettings.t1.start();
     }
 
-    public class readThread extends Thread{
+//    public class readThread extends Thread{
+//
+//
+////        @Override
+////        public void run(){
+////            String command = "";
+////
+////            while(true){
+////                try {
+////                    command = AppSettings.cl.getData();
+////                    System.out.println("komenda lobby: " + command);
+//////                    if(command.indexOf("\\users\\") == 0){
+//////                        int pos;
+//////                        if(command.length() == 7){
+//////                            continue;
+//////                        }
+//////                        command = command.substring(6);
+//////                        while(command.contains("\\")){
+//////                            pos = command.indexOf("\\");
+//////                            userNames.add(command.substring(0,pos));
+//////                            System.out.println("pos + 1: " + command.substring(0,pos));
+//////                            command = command.substring(pos + 1);
+//////                        }
+//////                        userNames.add(command);
+//////                        showNames();
+//////                        System.out.println(command);
+//////                    }
+////                    if(command.indexOf("\\add_user\\") == 0){
+////                        String user = command.substring(10);
+////                        if(user.equals("")){
+////                            System.out.println("o ja pierdole");
+////                        }
+////                        System.out.println(AppSettings.myName + (" v1: "+ AppSettings.userNames));
+////                        AppSettings.userNames.add(user);
+////                        System.out.println(AppSettings.myName + (" v2: "+ AppSettings.userNames));
+////                        System.out.println("add user: " + user);
+////
+////                        showNames();
+////                    }
+////                } catch (IOException e) {
+////                    e.printStackTrace();
+////                }
+////            }
+//        }
+//    }
 
 
-        @Override
-        public void run(){
-            String command = "";
-
-            while(true){
-                try {
-                    command = AppSettings.cl.getData();
-                    System.out.println("komenda lobby: " + command);
-//                    if(command.indexOf("\\users\\") == 0){
-//                        int pos;
-//                        if(command.length() == 7){
-//                            continue;
-//                        }
-//                        command = command.substring(6);
-//                        while(command.contains("\\")){
-//                            pos = command.indexOf("\\");
-//                            userNames.add(command.substring(0,pos));
-//                            System.out.println("pos + 1: " + command.substring(0,pos));
-//                            command = command.substring(pos + 1);
-//                        }
-//                        userNames.add(command);
-//                        showNames();
-//                        System.out.println(command);
-//                    }
-                    if(command.indexOf("\\add_user\\") == 0){
-                        String user = command.substring(10);
-                        if(user.equals("")){
-                            System.out.println("o ja pierdole");
-                        }
-                        System.out.println(AppSettings.myName + (" v1: "+ AppSettings.userNames));
-                        AppSettings.userNames.add(user);
-                        System.out.println(AppSettings.myName + (" v2: "+ AppSettings.userNames));
-                        System.out.println("add user: " + user);
-
-                        showNames();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void showNames(){
-        System.out.println("show names!");
-        if(AppSettings.userNames.size() != 0){
-            int i = 0;
-            for(String user : AppSettings.userNames){
-                Text temp = new Text(user, 20, Math.round(AppSettings.height / 4) + i * 30, Math.round(AppSettings.width / 2) - 40,  Math.round(AppSettings.height / 18));
-                window.frame.add(temp);
-                i++;
-            }
-//            for(int i = 0; i < userNames.size(); i++){
-//                Text temp = new Text(userNames.get(i), 20, Math.round(AppSettings.height / 4) + i * 30, Math.round(AppSettings.width / 2) - 40,  Math.round(AppSettings.height / 18));
-//                window.frame.add(temp);
-//            }
-            System.out.println(AppSettings.myName + (": "+ AppSettings.userNames));
-            window.reload();
-        }
-    }
 
 
     @Override

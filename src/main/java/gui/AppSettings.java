@@ -2,6 +2,7 @@ package gui;
 
 import org.json.JSONObject;
 
+import javax.swing.*;
 import java.util.List;
 import java.util.Set;
 
@@ -17,4 +18,7 @@ public class AppSettings {
     public static String gameId;
     public static String myName;
     public static List<String> userNames = null;
+    public static Panel userPanel;
+
+    public static Thread t1;
 }
