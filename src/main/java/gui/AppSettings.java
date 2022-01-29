@@ -19,6 +19,8 @@ public class AppSettings {
     public static String myName;
     public static List<String> userNames = null;
     public static Panel userPanel;
+    public static int questionToEnd;
+    public static int currentQuestion;
 
     public static Thread t1;
 }

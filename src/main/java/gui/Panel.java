@@ -18,9 +18,8 @@ public class Panel extends JPanel {
                 this.add(temp);
                 i++;
             }
-            this.revalidate();
-            this.repaint();
-//            window.reload();
         }
+        this.revalidate();
+        this.repaint();
     }
 }

@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class QuizStudent implements ActionListener {
 
@@ -18,7 +19,9 @@ public class QuizStudent implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-        questionNumber = new Text("Pytanie " + 1, 20, 20, Math.round(width) - 40, 60, Color.BLACK, 32);
+        questionNumber = new Text("Pytanie " + (AppSettings.currentQuestion + 1), 20, 20, Math.round(width) - 40, 60, Color.BLACK, 32);
+
+        AppSettings.currentQuestion++;
 
         answer = new Button[4];
 
@@ -44,6 +47,19 @@ public class QuizStudent implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        for(int i = 0; i < 4; i++){
+            if(e.getSource() == answer[i]){
+                for(int j = 0; j < 4; j++){
+                    if(i != j)
+                        answer[j].changeToGrey();
+                    answer[j].removeActionListener(this);
+                }
+                try {
+                    AppSettings.cl.sendData("\\answer_student\\id\\"+AppSettings.gameId+"\\number\\"+ AppSettings.currentQuestion + "\\answer\\" + i);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
     }
 }

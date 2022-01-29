@@ -19,6 +19,8 @@ public class Menu implements ActionListener {
         int height = AppSettings.height;
         this.window = window;
 
+        AppSettings.currentQuestion = 0;
+
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 

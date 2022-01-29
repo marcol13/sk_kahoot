@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -17,6 +18,9 @@ public class ScoreBoard implements ActionListener {
         int width = AppSettings.width;
         int height = AppSettings.height;
         this.window = window;
+
+//        AppSettings.t1.interrupt();
+//        AppSettings.cl.closeConnection();
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();

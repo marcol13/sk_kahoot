@@ -161,7 +161,11 @@ public class Lobby extends Thread implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == startGame){
-            new QuizTeacher(window, AppSettings.gameJSON.questionQuantity);
+            try {
+                AppSettings.cl.sendData("\\start_game\\id\\"+AppSettings.gameId);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }

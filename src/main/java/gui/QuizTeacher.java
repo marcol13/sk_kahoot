@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class QuizTeacher implements ActionListener {
 
@@ -23,7 +24,8 @@ public class QuizTeacher implements ActionListener {
         int width = AppSettings.width;
         int height = AppSettings.height;
         this.window = window;
-        this.questionToEnd = questionToEnd;
+//        this.questionToEnd = questionToEnd;
+        AppSettings.questionToEnd--;
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
@@ -75,12 +77,25 @@ public class QuizTeacher implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == nextQuestion){
-            if(questionToEnd == 1){
+            if(AppSettings.questionToEnd == 0){
+                try {
+                    AppSettings.cl.sendData("\\end_game\\id\\" + AppSettings.gameId);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 new ScoreBoard(window);
             }
             else{
-                new QuizTeacher(window, questionToEnd - 1);
+                try {
+                    AppSettings.cl.sendData("\\next_question\\id\\" + AppSettings.gameId);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                if(AppSettings.questionToEnd < AppSettings.gameJSON.questionQuantity)
+                    new QuizTeacher(window, AppSettings.questionToEnd);
             }
         }
     }
+
+
 }

@@ -60,6 +60,23 @@ public class ReadThread extends Thread{
                     AppSettings.cl.closeConnection();
                     this.interrupt();
                 }
+                if(command.indexOf("\\next_question\\") == 0){
+                    new QuizStudent(window);
+                }
+                if(command.indexOf("\\ok\\start_game\\") == 0){
+                    new QuizTeacher(window, AppSettings.questionToEnd);
+                }
+                if(command.indexOf("\\error\\no_users") == 0){
+                    JOptionPane.showMessageDialog(null, "Nie ma żadnych graczy", "Kahoot", JOptionPane.PLAIN_MESSAGE);
+                }
+                if(command.indexOf("\\end_game\\") == 0){
+                    new Menu(window);
+                    JOptionPane.showMessageDialog(null, "Koniec gry", "Kahoot", JOptionPane.PLAIN_MESSAGE);
+                    AppSettings.cl.closeConnection();
+                    this.interrupt();
+                }
+
+                //TODO End game with score board -> close connection and end thread
             } catch (IOException e) {
                 e.printStackTrace();
             }

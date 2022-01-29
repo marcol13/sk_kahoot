@@ -70,6 +70,7 @@ public class CreateGame implements ActionListener {
                     AppSettings.cl = new ClientConnection("0.0.0.0", 5050);
                     AppSettings.cl.sendData("\\create_game\\"+name+"\\quantity\\"+quantity+"\\time\\"+time);
                     AppSettings.gameId = AppSettings.cl.getData();
+                    AppSettings.questionToEnd = quantity;
 //                    AppSettings.cl.sendData("\\id-"+AppSettings.gameId+"\\quantity\\"+quantity);
 //                    AppSettings.cl.sendData("\\id-"+AppSettings.gameId+"\\time\\"+time);
                     new AddQuestion(window, quantity);
