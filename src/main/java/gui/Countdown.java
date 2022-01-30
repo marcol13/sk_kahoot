@@ -1,8 +1,6 @@
 package gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -38,7 +36,12 @@ public class Countdown{
                 try {
                     AppSettings.cl.sendData("\\countdown_end\\id\\"+AppSettings.gameId);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    if(AppSettings.rankingMap != null){
+                        new ScoreBoard(window);
+                    }
+                    else{
+                        new Menu(window);
+                    }
                 }
                 return;
             }

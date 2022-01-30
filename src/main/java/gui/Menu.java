@@ -20,6 +20,8 @@ public class Menu implements ActionListener {
         this.window = window;
 
         AppSettings.currentQuestion = 0;
+        AppSettings.isAdmin = false;
+        AppSettings.isGameStarted = false;
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
@@ -53,12 +55,7 @@ public class Menu implements ActionListener {
             new JoinRoom(window);
         }
         else if(e.getSource() == exitButton){
-//            System.exit(0);
-            try {
-                AppSettings.cl.sendData("mam tego dosyć v2");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            System.exit(0);
         }
     }
 }

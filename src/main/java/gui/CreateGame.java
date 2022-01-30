@@ -66,6 +66,7 @@ public class CreateGame implements ActionListener {
             if(!name.isEmpty() && quantity >= 1 && quantity <= 10 && time >= 10 && time <= 99){
                 AppSettings.gameJSON = new Game(name, quantity, time);
                 AppSettings.answerCreationQuantity = quantity;
+                AppSettings.isAdmin = true;
                 try {
                     AppSettings.cl = new ClientConnection(AppSettings.serverAddress, 5050);
                     AppSettings.cl.sendData("\\create_game\\"+name+"\\quantity\\"+quantity+"\\time\\"+time);

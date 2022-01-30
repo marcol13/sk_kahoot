@@ -107,8 +107,32 @@ public class ReadThread extends Thread{
                 }
 
                 //TODO End game with score board -> close connection and end thread
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                new Menu(window);
+                JOptionPane.showMessageDialog(null, "Błąd połączenia z serwerem", "Kahoot", JOptionPane.PLAIN_MESSAGE);
+                try {
+                    this.join();
+                } catch (InterruptedException ex) {
+                    System.out.println("Koniec połączenia");
+                }
+            }
+            catch(InterruptedException e){
+                System.out.println("Koniec połączenia");
+            }
+            catch(IndexOutOfBoundsException e){
+                if(!AppSettings.isAdmin){
+                    new Menu(window);
+                    JOptionPane.showMessageDialog(null, "Błąd połączenia z serwerem", "Kahoot", JOptionPane.PLAIN_MESSAGE);
+                }
+                else if(!AppSettings.isGameStarted){
+                    new Menu(window);
+                    JOptionPane.showMessageDialog(null, "Błąd połączenia z serwerem", "Kahoot", JOptionPane.PLAIN_MESSAGE);
+                }
+                try {
+                    this.join();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

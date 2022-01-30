@@ -51,13 +51,17 @@ public class ClientConnection {
                 messageSize = -1;
                 break;
             }
-
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             this.is = socket.getInputStream();
             byte[] bytearr = new byte[512];
             int len = is.read(bytearr);
-            baos.write(bytearr, 0, len);
-            this.nowReaded += String.valueOf(baos);
+            try{
+                baos.write(bytearr, 0, len);
+                this.nowReaded += String.valueOf(baos);
+            }catch(IndexOutOfBoundsException e){
+                throw new IndexOutOfBoundsException();
+            }
+
             if (len < 1)
                 throw new IOException();
         }

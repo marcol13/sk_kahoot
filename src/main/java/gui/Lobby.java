@@ -163,6 +163,7 @@ public class Lobby extends Thread implements ActionListener {
         if(e.getSource() == startGame){
             try {
                 AppSettings.cl.sendData("\\start_game\\id\\"+AppSettings.gameId);
+                AppSettings.isGameStarted = true;
             } catch (IOException ex) {
                 ex.printStackTrace();
             }

@@ -23,6 +23,8 @@ public class AppSettings {
     public static int questionToEnd;
     public static int currentQuestion;
     public static HashMap<String, Integer> rankingMap;
+    public static boolean isAdmin = false;
+    public static boolean isGameStarted = false;
 
     public static Thread t1;
     public static String serverAddress;
