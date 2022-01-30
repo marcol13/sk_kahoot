@@ -13,7 +13,7 @@ public class Checkbox extends JCheckBox {
     //https://www.flaticon.com/free-icon/close_1828665?term=cancel&page=1&position=14&page=1&position=14&related_id=1828665&origin=search
     ImageIcon closeIcon = new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/resources/close.png")));
 
-    public Checkbox(int x, int y, int width, int height){
+    public Checkbox(int x, int y){
         this.setFocusable(false);
         this.setBounds(x, y, 40, 32);
         this.setIcon(closeIcon);

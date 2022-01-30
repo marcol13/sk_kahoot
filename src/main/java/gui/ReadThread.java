@@ -1,8 +1,5 @@
 package gui;
 
-
-import org.json.JSONObject;
-
 import javax.swing.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,41 +14,21 @@ public class ReadThread extends Thread{
 
     @Override
     public void run(){
-        String command = "";
+        String command;
+        boolean flag = true;
 
-        while(true){
+        while(flag){
             try {
                 command = AppSettings.cl.getData();
-                System.out.println("komenda lobby: " + command);
-//                    if(command.indexOf("\\users\\") == 0){
-//                        int pos;
-//                        if(command.length() == 7){
-//                            continue;
-//                        }
-//                        command = command.substring(6);
-//                        while(command.contains("\\")){
-//                            pos = command.indexOf("\\");
-//                            userNames.add(command.substring(0,pos));
-//                            System.out.println("pos + 1: " + command.substring(0,pos));
-//                            command = command.substring(pos + 1);
-//                        }
-//                        userNames.add(command);
-//                        showNames();
-//                        System.out.println(command);
-//                    }
                 if(command.indexOf("\\add_user\\") == 0){
                     String user = command.substring(10);
-                    System.out.println(AppSettings.myName + (" v1: "+ AppSettings.userNames));
                     AppSettings.userNames.add(user);
-                    System.out.println(AppSettings.myName + (" v2: "+ AppSettings.userNames));
-                    System.out.println("add user: " + user);
-
-                    AppSettings.userPanel.showNames(window);
+                    AppSettings.userPanel.showNames();
                 }
                 if(command.indexOf("\\delete_user\\") == 0){
                     String user = command.substring(13);
                     if(AppSettings.userNames.remove(user)){
-                        AppSettings.userPanel.showNames(window);
+                        AppSettings.userPanel.showNames();
                     }
                     else{
                         System.out.println("Nie ma takiego użytkownika: " + user);
@@ -101,7 +78,6 @@ public class ReadThread extends Thread{
                         }
 
                         AppSettings.rankingMap.put(user, Integer.parseInt(points));
-                        System.out.println("user: " + user + " points: " + points);
                         command = command.substring(pointsIndex + 8);
                     }
                 }
@@ -110,6 +86,7 @@ public class ReadThread extends Thread{
             } catch (IOException e) {
                 new Menu(window);
                 JOptionPane.showMessageDialog(null, "Błąd połączenia z serwerem", "Kahoot", JOptionPane.PLAIN_MESSAGE);
+                flag = false;
                 try {
                     this.join();
                 } catch (InterruptedException ex) {
@@ -117,6 +94,7 @@ public class ReadThread extends Thread{
                 }
             }
             catch(InterruptedException e){
+                flag = false;
                 System.out.println("Koniec połączenia");
             }
             catch(IndexOutOfBoundsException e){
@@ -129,9 +107,10 @@ public class ReadThread extends Thread{
                     JOptionPane.showMessageDialog(null, "Błąd połączenia z serwerem", "Kahoot", JOptionPane.PLAIN_MESSAGE);
                 }
                 try {
+                    flag = false;
                     this.join();
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
+                } catch (InterruptedException ignored) {
+
                 }
             }
         }

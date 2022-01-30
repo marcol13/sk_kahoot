@@ -11,7 +11,7 @@ public class Answer {
         this.isCorrect = isCorrect;
     }
 
-    public JSONObject addToJSON() throws Exception {
+    public JSONObject addToJSON() {
         JSONObject joAnswer = new JSONObject();
         joAnswer.put("question", this.content);
         joAnswer.put("isCorrect", this.isCorrect);

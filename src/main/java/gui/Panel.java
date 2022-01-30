@@ -9,7 +9,7 @@ public class Panel extends JPanel {
         this.setLayout(null);
     }
 
-    public void showNames(GUI window){
+    public void showNames(){
         this.removeAll();
         if(AppSettings.userNames.size() != 0){
             int i = 0;

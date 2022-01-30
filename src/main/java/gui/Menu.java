@@ -3,18 +3,18 @@ package gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.Objects;
 
 public class Menu implements ActionListener {
     //Create with maketext.io
-    private ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/resources/Kahoot.png")));
+
     Button createButton;
     Button joinButton;
     Button exitButton;
     GUI window;
 
     public Menu(GUI window){
+        ImageIcon logo = new ImageIcon(Objects.requireNonNull(getClass().getResource("/main/resources/Kahoot.png")));
         int width = AppSettings.width;
         int height = AppSettings.height;
         this.window = window;
@@ -26,16 +26,16 @@ public class Menu implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-        createButton = new Button("Stwórz nową grę", Math.round(width / 4), Math.round(height / 3), Math.round(width / 2), Math.round(height / 12));
-        joinButton = new Button("Dołącz do istniejącej gry", Math.round(width / 4), Math.round(height / 3) + 150, Math.round(width / 2), Math.round(height / 12));
-        exitButton = new Button("Zamknij", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+        createButton = new Button("Stwórz nową grę", (width / 4), (height / 3), (width / 2), (height / 12));
+        joinButton = new Button("Dołącz do istniejącej gry", (width / 4), (height / 3) + 150, (width / 2), (height / 12));
+        exitButton = new Button("Zamknij", (width / 4), (height / 3) + 300, (width / 2), (height / 12));
 
         createButton.addActionListener(this);
         joinButton.addActionListener(this);
         exitButton.addActionListener(this);
 
         JLabel logoLabel = new JLabel(logo);
-        logoLabel.setBounds(Math.round((width - logo.getIconWidth()) / 2), 100, logo.getIconWidth(), logo.getIconHeight());
+        logoLabel.setBounds(((width - logo.getIconWidth()) / 2), 100, logo.getIconWidth(), logo.getIconHeight());
         logoLabel.setVisible(true);
 
         window.frame.add(logoLabel);

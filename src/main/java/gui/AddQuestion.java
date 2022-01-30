@@ -1,6 +1,5 @@
 package gui;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -28,34 +27,34 @@ public class AddQuestion implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-        questionContentText = new Text("Treść pytania " + (AppSettings.answerCreationQuantity - toMake + 1), 0, Math.round(height / 14), width, Math.round(height / 18));
-        questionContentInput = new InputText(Math.round(width / 4), Math.round(height / 8), Math.round(width / 2), 50);
+        questionContentText = new Text("Treść pytania " + (AppSettings.answerCreationQuantity - toMake + 1), 0, height / 14, width, height / 18);
+        questionContentInput = new InputText(width / 4, height / 8, width / 2, 50);
 
         answerText = new Text[4];
         answerInput = new InputText[4];
         answerCheckbox = new Checkbox[4];
 
         for(int i = 0; i < 4; i++){
-            answerText[i] = new Text("Odpowiedź "+(i+1), Math.round(width / 4) - 50, Math.round(height / 4) - 40 + i * 90, Math.round(width * 3/4), Math.round(height / 18));
-            answerInput[i] = new InputText(Math.round(width * 2 / 5) - 70, Math.round(height / 4) + i * 90, Math.round(width / 2), 50);
-            answerCheckbox[i] = new Checkbox(Math.round(width / 8) + 50, Math.round(height / 4) + 10 + i * 90, 50, 50);
+            answerText[i] = new Text("Odpowiedź "+(i+1), (width / 4) - 50, (height / 4) - 40 + i * 90, (width * 3/4), (height / 18));
+            answerInput[i] = new InputText((width * 2 / 5) - 70, (height / 4) + i * 90, (width / 2), 50);
+            answerCheckbox[i] = new Checkbox((width / 8) + 50, (height / 4) + 10 + i * 90);
             window.frame.add(answerText[i]);
             window.frame.add(answerInput[i]);
             window.frame.add(answerCheckbox[i]);
         }
 
         if(toMake == 1){
-            buttonLobby = new Button("Przejdź do lobby", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+            buttonLobby = new Button("Przejdź do lobby", (width / 4), (height / 3) + 300, (width / 2), (height / 12));
             buttonLobby.addActionListener(this);
             window.frame.add(buttonLobby);
         }
         else{
-            buttonNext = new Button("Następne pytanie", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+            buttonNext = new Button("Następne pytanie", (width / 4), (height / 3) + 300, (width / 2), (height / 12));
             buttonNext.addActionListener(this);
             window.frame.add(buttonNext);
         }
 
-        errorMessage = new Text("Podałeś błędne dane", 0, Math.round(height / 3) + 320 + Math.round(height / 12), AppSettings.width, Math.round(height/18));
+        errorMessage = new Text("Podałeś błędne dane", 0, (height / 3) + 320 + (height / 12), AppSettings.width, (height/18));
         errorMessage.setVisible(false);
 
         window.frame.add(questionContentText);
@@ -67,7 +66,7 @@ public class AddQuestion implements ActionListener {
 
     public Question addQuestion(String questionContent, String [] answersContent){
         List<Answer> answers;
-        answers = new ArrayList<Answer>();
+        answers = new ArrayList<>();
         Question result;
         for(int i = 0; i < 4; i++){
             answers.add(new Answer(answersContent[i], answerCheckbox[i].isSelected()));
@@ -81,15 +80,15 @@ public class AddQuestion implements ActionListener {
         if(e.getSource() == buttonNext){
             String questionContent = questionContentInput.getText();
             String [] answerContent = new String [4];
-            Boolean flagAnswer = true;
-            Boolean flagCheckbox = false;
+            boolean flagAnswer = true;
+            boolean flagCheckbox = false;
             for(int i = 0; i < 4; i++){
                 answerContent[i] = answerInput[i].getText();
                 if(answerContent[i].isEmpty()){
                     flagAnswer = false;
                     break;
                 }
-                if(!flagCheckbox && answerCheckbox[i].isSelected() == true){
+                if(!flagCheckbox && answerCheckbox[i].isSelected()){
                     flagCheckbox = true;
                 }
             }
@@ -98,7 +97,7 @@ public class AddQuestion implements ActionListener {
                 try {
                     sendAnswers();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Problem z wysłaniem pytań");
                 }
                 new AddQuestion(window, toMake - 1);
             }
@@ -109,15 +108,15 @@ public class AddQuestion implements ActionListener {
         else if(e.getSource() == buttonLobby){
             String questionContent = questionContentInput.getText();
             String [] answerContent = new String [4];
-            Boolean flagAnswer = true;
-            Boolean flagCheckbox = false;
+            boolean flagAnswer = true;
+            boolean flagCheckbox = false;
             for(int i = 0; i < 4; i++){
                 answerContent[i] = answerInput[i].getText();
                 if(answerContent[i].isEmpty()){
                     flagAnswer = false;
                     break;
                 }
-                if(!flagCheckbox && answerCheckbox[i].isSelected() == true){
+                if(!flagCheckbox && answerCheckbox[i].isSelected()){
                     flagCheckbox = true;
                 }
             }
@@ -126,7 +125,7 @@ public class AddQuestion implements ActionListener {
                 try {
                     sendAnswers();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Problem z wysłaniem pytań");
                 }
                 new Lobby(window, true);
             }

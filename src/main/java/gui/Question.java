@@ -14,7 +14,7 @@ public class Question {
         this.answers = answers;
     }
 
-    public JSONObject addToJSON() throws Exception {
+    public JSONObject addToJSON() {
         JSONObject joQuestion = new JSONObject();
         JSONArray jaAnswers = new JSONArray();
         joQuestion.put("question", this.content);

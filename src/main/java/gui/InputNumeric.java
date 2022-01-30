@@ -3,8 +3,6 @@ package gui;
 import javax.swing.*;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.InternationalFormatter;
-import javax.swing.text.NumberFormatter;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class InputNumeric extends JFormattedTextField {

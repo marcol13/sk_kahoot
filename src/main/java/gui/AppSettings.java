@@ -2,10 +2,8 @@ package gui;
 
 import org.json.JSONObject;
 
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 public class AppSettings {
     public static final int width = 800;

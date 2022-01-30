@@ -3,7 +3,6 @@ package gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 public class JoinRoom implements ActionListener {
@@ -24,16 +23,16 @@ public class JoinRoom implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-        userNameText = new Text("Nazwa użytkownika", 0, Math.round(height / 7), width, Math.round(height / 18));
-        userNameInput = new InputText(Math.round(width / 4), Math.round(height / 7) + 60, Math.round(width / 2), 50);
+        userNameText = new Text("Nazwa użytkownika", 0, (height / 7), width, (height / 18));
+        userNameInput = new InputText((width / 4), (height / 7) + 60, (width / 2), 50);
 
-        roomIDText = new Text("Numer pokoju", 0, Math.round(height / 3), width, Math.round(height / 18));
-        roomIDInput = new InputText(Math.round(width / 4), Math.round(height / 3) + 60, Math.round(width / 2), 50);
+        roomIDText = new Text("Numer pokoju", 0, (height / 3), width, (height / 18));
+        roomIDInput = new InputText((width / 4), (height / 3) + 60, (width / 2), 50);
 
-        nextButton = new Button("Dalej", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
+        nextButton = new Button("Dalej", (width / 4), (height / 3) + 300, (width / 2), (height / 12));
         nextButton.addActionListener(this);
 
-        errorMessage = new Text("Podałeś błędne dane", 0, Math.round(height / 3) + 320 + Math.round(height / 12), AppSettings.width, Math.round(height/18));
+        errorMessage = new Text("Podałeś błędne dane", 0, (height / 3) + 320 + (height / 12), AppSettings.width, (height/18));
         errorMessage.setVisible(false);
 
         window.frame.add(userNameText);
@@ -51,18 +50,13 @@ public class JoinRoom implements ActionListener {
         if(e.getSource() == nextButton){
             String userName = userNameInput.getText();
             String gameID = roomIDInput.getText();
-            boolean infoFlag = false;
             if(!userName.isEmpty() && !gameID.isEmpty()){
                 try {
                     AppSettings.cl = new ClientConnection(AppSettings.serverAddress, 5050);
                     AppSettings.cl.sendData("\\join_game\\id\\"+(gameID+("\\user\\"+userName)));
-//                    while(!AppSettings.gameId.isEmpty() && !AppSettings.gameId.isEmpty() && !AppSettings.)
                     for(int i = 0; i < 2; i++){
                         String answer = AppSettings.cl.getData();
-                        System.out.println("answer join room: " + answer);
-                        System.out.println(answer);
-                        System.out.println(answer.equals("\\error\\id"));
-                        if(answer.indexOf("\\error\\id") == 0){
+                       if(answer.indexOf("\\error\\id") == 0){
                             errorMessage.setText("Nie istnieje gra o takim ID");
                             errorMessage.setVisible(true);
                             break;
@@ -86,12 +80,9 @@ public class JoinRoom implements ActionListener {
                             AppSettings.gameId = gameID;
                             AppSettings.gameJSON = new Game(gameName, gameQuantity, time);
                             AppSettings.myName = userName;
-
-//                        new Lobby(window, false);
                         }
                         else if(answer.indexOf("\\users\\") == 0){
                             int pos;
-                            System.out.println(answer.length());
                             if(answer.length() == 7){
                                 AppSettings.userNames = null;
                             }
@@ -101,11 +92,9 @@ public class JoinRoom implements ActionListener {
                                 while(answer.contains("\\")){
                                     pos = answer.indexOf("\\");
                                     AppSettings.userNames.add(answer.substring(0,pos));
-                                    System.out.println(answer.substring(0,pos));
                                     answer = answer.substring(pos + 1);
                                 }
                                 AppSettings.userNames.add(answer);
-                                System.out.println(answer);
                             }
                             new Lobby(window, false);
                         }
@@ -117,7 +106,7 @@ public class JoinRoom implements ActionListener {
                     }
 
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Problem z dołączeniem do gry");
                 }
             }
             else{

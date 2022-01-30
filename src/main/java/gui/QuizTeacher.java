@@ -14,7 +14,6 @@ public class QuizTeacher implements ActionListener {
     static Button [] answers;
     Countdown timer;
     static Button nextQuestion;
-    int questionToEnd;
     JSONObject questionJSON;
     String questionName;
     String [] answersName;
@@ -22,9 +21,7 @@ public class QuizTeacher implements ActionListener {
 
     public QuizTeacher(GUI window, int questionToEnd){
         int width = AppSettings.width;
-        int height = AppSettings.height;
         this.window = window;
-//        this.questionToEnd = questionToEnd;
         AppSettings.questionToEnd--;
 
         window.frame.getContentPane().removeAll();
@@ -40,24 +37,24 @@ public class QuizTeacher implements ActionListener {
                 correctAnswers[i] = (Boolean) questionJSON.getJSONArray("answers").getJSONObject(i).get("isCorrect");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Problem obsługą JSON");
         }
 
         questionContent = new Text(questionName, 15, 65, width - 30, 100, Color.BLACK);
 
         answers = new Button[4];
 
-        answers[0] = new Button(answersName[0], 15, 220, Math.round(width / 2) - 30, 150, "triangle", true);
-        answers[1] = new Button(answersName[1], Math.round(width / 2) + 15, 220, Math.round(width / 2) - 30, 150, "star", true);
-        answers[2] = new Button(answersName[2], 15, 385, Math.round(width / 2) - 30, 150, "circle", true);
-        answers[3] = new Button(answersName[3], Math.round(width / 2) + 15, 385, Math.round(width / 2) - 30, 150, "square", true);
+        answers[0] = new Button(answersName[0], 15, 220, (width / 2) - 30, 150, "triangle", true);
+        answers[1] = new Button(answersName[1], (width / 2) + 15, 220, (width / 2) - 30, 150, "star", true);
+        answers[2] = new Button(answersName[2], 15, 385, (width / 2) - 30, 150, "circle", true);
+        answers[3] = new Button(answersName[3], (width / 2) + 15, 385, (width / 2) - 30, 150, "square", true);
 
         nextQuestion = new Button("Dalej", 600, 600, 150, 40);
         nextQuestion.setVisible(false);
 
         nextQuestion.addActionListener(this);
 
-        timer = new Countdown(window, AppSettings.gameJSON.questionTime, Math.round(width / 2) - 30, 600, 60, 60, 40, nextQuestion, answers, correctAnswers);
+        timer = new Countdown(window, AppSettings.gameJSON.questionTime, (width / 2) - 30, 600, 60, 60, 40, nextQuestion, answers, correctAnswers);
         timer.start();
 
 
@@ -81,7 +78,7 @@ public class QuizTeacher implements ActionListener {
                 try {
                     AppSettings.cl.sendData("\\end_game\\id\\" + AppSettings.gameId);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Problem z wysłaniem danych");
                 }
                 new ScoreBoard(window);
             }
@@ -89,7 +86,7 @@ public class QuizTeacher implements ActionListener {
                 try {
                     AppSettings.cl.sendData("\\next_question\\id\\" + AppSettings.gameId);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Problem z wysłaniem danych");
                 }
                 if(AppSettings.questionToEnd < AppSettings.gameJSON.questionQuantity)
                     new QuizTeacher(window, AppSettings.questionToEnd);

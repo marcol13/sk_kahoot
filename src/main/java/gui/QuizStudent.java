@@ -21,16 +21,16 @@ public class QuizStudent implements ActionListener {
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
 
-        questionNumber = new Text("Pytanie " + (AppSettings.currentQuestion + 1), 20, 20, Math.round(width) - 40, 60, Color.BLACK, 32);
+        questionNumber = new Text("Pytanie " + (AppSettings.currentQuestion + 1), 20, 20, (width) - 40, 60, Color.BLACK, 32);
 
         AppSettings.currentQuestion++;
 
         answer = new Button[4];
 
-        answer[0] = new Button("", 20, 100, Math.round(width / 2) - 40, Math.round(height / 2) - 100, "triangle", false);
-        answer[1] = new Button("", Math.round(width / 2) + 20, 100, Math.round(width / 2) - 40, Math.round(height / 2) - 100, "star", false);
-        answer[2] = new Button("", 20, Math.round(height / 2) + 30, Math.round(width / 2) - 40, Math.round(height / 2) - 100, "circle", false);
-        answer[3] = new Button("", Math.round(width / 2) + 20, Math.round(height / 2) + 30, Math.round(width / 2) - 40, Math.round(height / 2) - 100, "square", false);
+        answer[0] = new Button("", 20, 100, (width / 2) - 40, (height / 2) - 100, "triangle", false);
+        answer[1] = new Button("", (width / 2) + 20, 100, (width / 2) - 40, (height / 2) - 100, "star", false);
+        answer[2] = new Button("", 20, (height / 2) + 30, (width / 2) - 40, (height / 2) - 100, "circle", false);
+        answer[3] = new Button("", (width / 2) + 20, (height / 2) + 30, (width / 2) - 40, (height / 2) - 100, "square", false);
 
         answer[0].addActionListener(this);
         answer[1].addActionListener(this);
@@ -60,7 +60,7 @@ public class QuizStudent implements ActionListener {
                 try {
                     AppSettings.cl.sendData("\\answer_student\\id\\"+AppSettings.gameId+"\\number\\"+ AppSettings.currentQuestion + "\\answer\\" + i);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.out.println("Problem z wysłaniem danych");
                 }
             }
         }
