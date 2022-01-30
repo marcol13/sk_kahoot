@@ -34,7 +34,7 @@ public class JoinRoom implements ActionListener {
         nextButton = new Button("Dalej", Math.round(width / 4), Math.round(height / 3) + 300, Math.round(width / 2), Math.round(height / 12));
         nextButton.addActionListener(this);
 
-        errorMessage = new Text("Podałeś błędne dane lub numer pokoju nie istnieje", 0, Math.round(height / 3) + 320 + Math.round(height / 12), AppSettings.width, Math.round(height/18));
+        errorMessage = new Text("Podałeś błędne dane", 0, Math.round(height / 3) + 320 + Math.round(height / 12), AppSettings.width, Math.round(height/18));
         errorMessage.setVisible(false);
 
         window.frame.add(userNameText);
@@ -70,6 +70,11 @@ public class JoinRoom implements ActionListener {
                         }
                         else if(answer.indexOf("\\error\\user") == 0){
                             errorMessage.setText("Istnieje już taki użytkownik");
+                            errorMessage.setVisible(true);
+                            break;
+                        }
+                        else if(answer.indexOf("\\error\\started") == 0){
+                            errorMessage.setText("Gra już się rozpoczęła");
                             errorMessage.setVisible(true);
                             break;
                         }
@@ -117,6 +122,7 @@ public class JoinRoom implements ActionListener {
                 }
             }
             else{
+                errorMessage.setText("Podałeś błędne dane");
                 errorMessage.setVisible(true);
             }
         }

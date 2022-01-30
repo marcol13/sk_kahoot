@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,11 +35,10 @@ public class Countdown{
             if(secondsStart == secondsPassed){
                 timer.cancel();
                 timer.purge();
-                next.setVisible(true);
-                for(int i = 0; i < 4; i++){
-                    if(!isCorrect[i]){
-                        answers[i].changeToGrey();
-                    }
+                try {
+                    AppSettings.cl.sendData("\\countdown_end\\id\\"+AppSettings.gameId);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
                 return;
             }
@@ -49,6 +49,15 @@ public class Countdown{
 
     public void start(){
         timer.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
+    public static void changeWrongToGrey(){
+        QuizTeacher.nextQuestion.setVisible(true);
+        for(int i = 0; i < 4; i++){
+            if(!QuizTeacher.correctAnswers[i]){
+                QuizTeacher.answers[i].changeToGrey();
+            }
+        }
     }
 
 }

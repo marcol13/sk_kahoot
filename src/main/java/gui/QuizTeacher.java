@@ -11,14 +11,14 @@ public class QuizTeacher implements ActionListener {
 
     GUI window;
     Text questionContent;
-    Button [] answers;
+    static Button [] answers;
     Countdown timer;
-    Button nextQuestion;
+    static Button nextQuestion;
     int questionToEnd;
     JSONObject questionJSON;
     String questionName;
     String [] answersName;
-    Boolean [] correctAnswers;
+    static Boolean [] correctAnswers;
 
     public QuizTeacher(GUI window, int questionToEnd){
         int width = AppSettings.width;

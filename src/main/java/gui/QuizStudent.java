@@ -8,13 +8,15 @@ import java.io.IOException;
 public class QuizStudent implements ActionListener {
 
     GUI window;
-    Button [] answer;
+    static Button [] answer;
     Text questionNumber;
+    static boolean isAnswered;
 
     public QuizStudent(GUI window){
         int width = AppSettings.width;
         int height = AppSettings.height;
         this.window = window;
+        isAnswered = false;
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
@@ -49,6 +51,7 @@ public class QuizStudent implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         for(int i = 0; i < 4; i++){
             if(e.getSource() == answer[i]){
+                isAnswered = true;
                 for(int j = 0; j < 4; j++){
                     if(i != j)
                         answer[j].changeToGrey();
@@ -62,4 +65,13 @@ public class QuizStudent implements ActionListener {
             }
         }
     }
+
+    public static void endQuestion(){
+        if(!QuizStudent.isAnswered){
+            for(int i = 0; i < 4; i++){
+                answer[i].changeToGrey();
+            }
+        }
+    }
+
 }

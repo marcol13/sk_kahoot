@@ -3,6 +3,7 @@ package gui;
 import org.json.JSONObject;
 
 import javax.swing.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class AppSettings {
     public static Panel userPanel;
     public static int questionToEnd;
     public static int currentQuestion;
+    public static HashMap<String, Integer> rankingMap;
 
     public static Thread t1;
 }

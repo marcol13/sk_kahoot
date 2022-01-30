@@ -11,7 +11,6 @@ public class ScoreBoard implements ActionListener {
 
     GUI window;
     Text scoreBoardTitle;
-    HashMap<String, Integer> scoreBoardUsers;
     Button toMenu;
 
     public ScoreBoard(GUI window){
@@ -24,16 +23,9 @@ public class ScoreBoard implements ActionListener {
 
         window.frame.getContentPane().removeAll();
         window.frame.repaint();
-        
-        scoreBoardUsers = new HashMap<String, Integer>();
 
-        scoreBoardUsers.put("Marcin", 12);
-        scoreBoardUsers.put("Maciej", 12);
-        scoreBoardUsers.put("Wojtek", 0);
-        scoreBoardUsers.put("Paweł", 0);
-        scoreBoardUsers.put("Mirosław Zelent", 10);
 
-        Map<String, Integer> sorted = sortByValue(scoreBoardUsers);
+        Map<String, Integer> sorted = sortByValue(AppSettings.rankingMap);
 
         scoreBoardTitle = new Text("Tablica wyników", Math.round(width / 2) - 250, 75, 500, 100, Color.BLACK, 45);
 

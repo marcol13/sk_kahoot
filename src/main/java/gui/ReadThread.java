@@ -1,8 +1,11 @@
 package gui;
 
 
+import org.json.JSONObject;
+
 import javax.swing.*;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ReadThread extends Thread{
 
@@ -74,6 +77,33 @@ public class ReadThread extends Thread{
                     JOptionPane.showMessageDialog(null, "Koniec gry", "Kahoot", JOptionPane.PLAIN_MESSAGE);
                     AppSettings.cl.closeConnection();
                     this.interrupt();
+                }
+                if(command.indexOf("\\question_end\\admin") == 0){
+                    Countdown.changeWrongToGrey();
+                }
+                if(command.indexOf("\\question_end\\user") == 0){
+                    QuizStudent.endQuestion();
+                }
+                if(command.indexOf("\\game_results\\") == 0){
+                    AppSettings.rankingMap = new HashMap<>();
+                    while(command.contains("\\name\\")){
+                        int nameIndex = command.indexOf("\\name\\");
+                        int pointsIndex = command.indexOf("\\score\\");
+                        String tempCommand = command.substring(pointsIndex + 7);
+                        String user = command.substring(nameIndex + 6, pointsIndex);
+                        String points;
+
+                        if(!tempCommand.contains("\\"))
+                            points = command.substring(pointsIndex + 7);
+                        else{
+                            int tempSlash = tempCommand.indexOf("\\");
+                            points = command.substring(pointsIndex + 7, pointsIndex + 7 + tempSlash);
+                        }
+
+                        AppSettings.rankingMap.put(user, Integer.parseInt(points));
+                        System.out.println("user: " + user + " points: " + points);
+                        command = command.substring(pointsIndex + 8);
+                    }
                 }
 
                 //TODO End game with score board -> close connection and end thread
