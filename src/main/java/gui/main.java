@@ -1,18 +1,15 @@
 package gui;
 
-import java.io.IOException;
-
 public class main {
-    public static void main(String[] args) throws IOException {
-        GUI window = new GUI();
-        new Menu(window);
+    public static void main(String[] args){
 
-//
-////        cl.sendData("siemanko");
-////        cl.sendData("b");
-//        AppSettings.cl.sendData("witam w mojej kuchni");
-//        new QuizStudent(window);
-//        new QuizTeacher(window);
-//        new ScoreBoard(window);
+        if(args.length < 1){
+            System.out.println("Podaj adres serwera");
+        }
+        else{
+            AppSettings.serverAddress = args[0];
+            GUI window = new GUI();
+            new Menu(window);
+        }
     }
 }

@@ -60,8 +60,8 @@ public class ReadThread extends Thread{
                 if(command.indexOf("\\unreachable_host\\") == 0){
                     new Menu(window);
                     JOptionPane.showMessageDialog(null, "Host nieosiągalny", "Kahoot", JOptionPane.PLAIN_MESSAGE);
-                    AppSettings.cl.closeConnection();
-                    this.interrupt();
+//                    AppSettings.cl.closeConnection();
+                    this.join();
                 }
                 if(command.indexOf("\\next_question\\") == 0){
                     new QuizStudent(window);
@@ -75,8 +75,8 @@ public class ReadThread extends Thread{
                 if(command.indexOf("\\end_game\\") == 0){
                     new Menu(window);
                     JOptionPane.showMessageDialog(null, "Koniec gry", "Kahoot", JOptionPane.PLAIN_MESSAGE);
-                    AppSettings.cl.closeConnection();
-                    this.interrupt();
+//                    AppSettings.cl.closeConnection();
+                    this.join();
                 }
                 if(command.indexOf("\\question_end\\admin") == 0){
                     Countdown.changeWrongToGrey();
@@ -107,7 +107,7 @@ public class ReadThread extends Thread{
                 }
 
                 //TODO End game with score board -> close connection and end thread
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 e.printStackTrace();
             }
         }

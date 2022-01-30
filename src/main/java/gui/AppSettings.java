@@ -25,4 +25,5 @@ public class AppSettings {
     public static HashMap<String, Integer> rankingMap;
 
     public static Thread t1;
+    public static String serverAddress;
 }

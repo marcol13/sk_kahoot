@@ -1,11 +1,10 @@
 package gui;
 
-import java.applet.AppletStub;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class JoinRoom implements ActionListener {
     GUI window;
@@ -55,7 +54,7 @@ public class JoinRoom implements ActionListener {
             boolean infoFlag = false;
             if(!userName.isEmpty() && !gameID.isEmpty()){
                 try {
-                    AppSettings.cl = new ClientConnection("0.0.0.0", 5050);
+                    AppSettings.cl = new ClientConnection(AppSettings.serverAddress, 5050);
                     AppSettings.cl.sendData("\\join_game\\id\\"+(gameID+("\\user\\"+userName)));
 //                    while(!AppSettings.gameId.isEmpty() && !AppSettings.gameId.isEmpty() && !AppSettings.)
                     for(int i = 0; i < 2; i++){
